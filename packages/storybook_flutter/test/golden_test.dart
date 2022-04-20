@@ -1,5 +1,5 @@
+import 'package:alchemist/alchemist.dart';
 import 'package:flutter/material.dart';
-import 'package:golden_toolkit/golden_toolkit.dart';
 import 'package:storybook_flutter/storybook_flutter.dart';
 
 Widget simpleStorybook(String initialStory) => Storybook(
@@ -27,25 +27,17 @@ Widget simpleStorybook(String initialStory) => Storybook(
     );
 
 void main() {
-  testGoldens('Simple story layout', (tester) async {
-    final builder = DeviceBuilder()
-      ..addScenario(
-        widget: simpleStorybook('Button'),
-        name: 'simple storybook',
-      );
+  goldenTest(
+    'Simple story layout',
+    fileName: 'simple_story_layout',
+    constraints: const BoxConstraints(maxWidth: 1384, maxHeight: 1050),
+    builder: () => simpleStorybook('Button'),
+  );
 
-    await tester.pumpDeviceBuilder(builder);
-    await screenMatchesGolden(tester, 'simple_story_layout');
-  });
-
-  testGoldens('Story layout', (tester) async {
-    final builder = DeviceBuilder()
-      ..addScenario(
-        widget: simpleStorybook('Customizable Button'),
-        name: 'simple storybook',
-      );
-
-    await tester.pumpDeviceBuilder(builder);
-    await screenMatchesGolden(tester, 'story_layout');
-  });
+  goldenTest(
+    'Story layout',
+    fileName: 'story_layout',
+    constraints: const BoxConstraints(maxWidth: 1384, maxHeight: 1050),
+    builder: () => simpleStorybook('Customizable Button'),
+  );
 }
